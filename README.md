@@ -1,10 +1,10 @@
-# 🤖 AI Job Application Bot
+#  AI Job Application Bot
 
 An AI-powered automation system that scrapes job listings, scores them against your resume using Claude, generates personalised cover letters, and auto-fills applications — all from the command line.
 
 ---
 
-## ✨ Features
+##  Features
 
 | Feature | Details |
 |---|---|
@@ -58,7 +58,7 @@ ai-job-bot/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Clone & install
 
@@ -145,7 +145,7 @@ streamlit run dashboard.py
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 main.py
@@ -168,7 +168,7 @@ main.py
 
 ---
 
-## 🔌 Adding a New Job Board
+## Adding a New Job Board
 
 1. Create a new class in `scraper/site_handlers.py` inheriting `BaseSiteHandler`
 2. Set `SOURCE_ID = "my_board"`
@@ -178,7 +178,7 @@ main.py
 
 ---
 
-## 🛡️ Ethics & Legal
+## Ethics & Legal
 
 - **Respect robots.txt** and each site's Terms of Service
 - This tool is built for **personal job searching only** — not commercial scraping
@@ -188,7 +188,7 @@ main.py
 
 ---
 
-## 📊 Dashboard
+## Dashboard
 
 ```bash
 streamlit run dashboard.py
@@ -203,7 +203,7 @@ The dashboard provides:
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 **`ANTHROPIC_API_KEY` not set**
 → Copy `.env.example` to `.env` and add your key.
@@ -225,6 +225,6 @@ The dashboard provides:
 
 ---
 
-## 📄 License
+## License
 
 MIT License — see `LICENSE` for details.
