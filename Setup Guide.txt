@@ -1,0 +1,304 @@
+════════════════════════════════════════════════════════════════
+        AI JOB APPLICATION BOT — COMPLETE SETUP GUIDE
+        Built by Raghav Gupta | github.com/Blaze5322
+════════════════════════════════════════════════════════════════
+
+This bot scrapes jobs, matches them with your resume using a 
+local AI (LLaMA 3.2), writes cover letters, and applies — 
+all running on YOUR machine. No cloud. No API costs. Ever.
+
+────────────────────────────────────────────────────────────────
+BEFORE YOU START — WHAT YOU NEED
+────────────────────────────────────────────────────────────────
+
+  ✅ Python 3.10 or higher
+       Download: https://python.org/downloads
+       During install → tick "Add Python to PATH"
+
+  ✅ Ollama (runs LLaMA 3.2 locally for free)
+       Download: https://ollama.com/download
+       Install it like any normal Windows app
+
+  ✅ Git (to clone this repo)
+       Download: https://git-scm.com/downloads
+       Keep all default settings during install
+
+  ✅ A resume file (PDF or DOCX format)
+
+
+────────────────────────────────────────────────────────────────
+STEP 1 — CLONE THE PROJECT
+────────────────────────────────────────────────────────────────
+
+  Open a terminal (Command Prompt or PowerShell) and run:
+
+    git clone https://github.com/Blaze5322/ai-job-bot.git
+    cd ai-job-bot
+
+
+────────────────────────────────────────────────────────────────
+STEP 2 — DOWNLOAD THE AI MODEL
+────────────────────────────────────────────────────────────────
+
+  Open a NEW terminal window and run:
+
+    ollama pull llama3.2
+
+  This downloads the LLaMA 3.2 model (~2GB). Wait for it to
+  finish — it only needs to download once.
+
+  Then test it works:
+
+    ollama run llama3.2
+
+  Type "hello" — if it replies, you're good. 
+  Press Ctrl+D or type /bye to exit.
+
+  ⚠️  IMPORTANT: Keep Ollama running in the background.
+  Before running the bot every time, open a terminal and run:
+
+    ollama serve
+
+  Leave that window open. It won't show much — that's normal.
+  If you see "Error: address already in use" — Ollama is already
+  running. That's fine, ignore it.
+
+
+────────────────────────────────────────────────────────────────
+STEP 3 — CREATE A VIRTUAL ENVIRONMENT
+────────────────────────────────────────────────────────────────
+
+  In the project folder terminal:
+
+    python -m venv .venv
+
+  Then activate it:
+
+    Windows:     .venv\Scripts\activate
+    Mac/Linux:   source .venv/bin/activate
+
+  You'll see (.venv) appear in your terminal. That means it's on.
+
+
+────────────────────────────────────────────────────────────────
+STEP 4 — INSTALL DEPENDENCIES
+────────────────────────────────────────────────────────────────
+
+    pip install -r requirements.txt
+    playwright install chromium
+
+  This takes a few minutes. You'll see lots of text — normal.
+
+
+────────────────────────────────────────────────────────────────
+STEP 5 — SET UP YOUR .env FILE
+────────────────────────────────────────────────────────────────
+
+  Copy the example file:
+
+    Windows:   copy .env.example .env
+    Mac/Linux: cp .env.example .env
+
+  Open .env in any text editor and fill in YOUR details:
+
+    ANTHROPIC_API_KEY=not-needed-using-ollama   ← keep exactly this
+    RESUME_PATH=resume.pdf
+    APPLICANT_NAME=Your Full Name
+    APPLICANT_EMAIL=your@email.com
+    APPLICANT_PHONE=+91-9999999999
+    APPLICANT_LINKEDIN=https://linkedin.com/in/yourprofile
+    APPLICANT_GITHUB=https://github.com/yourusername
+    APPLICANT_PORTFOLIO=NONE
+    APPLICANT_LOCATION=Your City, Country
+
+  Save the file.
+
+
+────────────────────────────────────────────────────────────────
+STEP 6 — REPLACE THE AI FILES (IMPORTANT!)
+────────────────────────────────────────────────────────────────
+
+  The original project used the Claude API (paid).
+  This version uses Ollama + LLaMA 3.2 (free, local).
+
+  The files ai/matcher.py and ai/cover_letter.py have already
+  been updated in this repo to use Ollama instead.
+
+  If you ever see an error about "anthropic" or "ANTHROPIC_API_KEY"
+  just make sure your .env has:
+
+    ANTHROPIC_API_KEY=not-needed-using-ollama
+
+  That's all. No actual API key needed.
+
+
+────────────────────────────────────────────────────────────────
+STEP 7 — ADD YOUR RESUME
+────────────────────────────────────────────────────────────────
+
+  Copy your resume into the project folder and name it:
+
+    resume.pdf
+
+  Or if it's a Word file:
+
+    resume.docx
+
+  Then update RESUME_PATH in your .env to match.
+
+
+────────────────────────────────────────────────────────────────
+STEP 8 — SET YOUR JOB PREFERENCES
+────────────────────────────────────────────────────────────────
+
+  Open job_prefs.json and edit it:
+
+    {
+      "job_titles": ["Software Engineer", "Python Developer"],
+      "keywords": ["Python", "Django", "REST API"],
+      "locations": ["Remote", "Your City"],
+      "experience_level": "entry",
+      "job_type": "full-time"
+    }
+
+  Change these to match what YOU are looking for.
+
+
+────────────────────────────────────────────────────────────────
+STEP 9 — RUN A TEST (DRY RUN)
+────────────────────────────────────────────────────────────────
+
+  Make sure Ollama is running (ollama serve in another terminal).
+
+  Then in the project terminal:
+
+    python main.py --resume resume.pdf --dry-run
+
+  This runs the full pipeline but does NOT submit any applications.
+  It will:
+    → Scrape job listings
+    → Score each job against your resume (AI)
+    → Generate cover letters
+    → Show you what WOULD be applied to
+
+  Expected runtime: 5–10 minutes for the first run.
+
+  ⚠️  The bot only scores 5 jobs at a time to keep it fast.
+  You can change this in main.py (look for new_jobs[:5])
+
+
+────────────────────────────────────────────────────────────────
+STEP 10 — VIEW THE DASHBOARD
+────────────────────────────────────────────────────────────────
+
+    streamlit run dashboard.py
+
+  This opens a browser with a visual dashboard showing:
+    → All scraped jobs and their match scores
+    → Application statuses
+    → Analytics and charts
+
+
+────────────────────────────────────────────────────────────────
+STEP 11 — GO LIVE (ACTUALLY APPLY)
+────────────────────────────────────────────────────────────────
+
+  When you're happy with the dry run results:
+
+    python main.py --resume resume.pdf --mode visible --batch 5
+
+  --mode visible  → Opens a real browser so you can watch it work
+  --batch 5       → Applies to 5 jobs at a time (increase carefully)
+
+  ⚠️  Start with --batch 3 or 5. Don't go too high at once.
+
+
+────────────────────────────────────────────────────────────────
+TROUBLESHOOTING
+────────────────────────────────────────────────────────────────
+
+  Problem: "ollama is not recognized"
+  Fix:     Restart your terminal after installing Ollama
+
+  Problem: "ConnectionRefusedError" when running bot
+  Fix:     Run "ollama serve" in a separate terminal first
+
+  Problem: "Could not parse JSON from Llama"
+  Fix:     Normal warning — the bot uses a fallback score (50%)
+           Ollama still works, just gave an unusual response
+
+  Problem: Bot is stuck / taking too long
+  Fix:     Press Ctrl+C to stop it. The AI model can be slow
+           on older hardware. This is normal.
+
+  Problem: "No such file: resume.pdf"
+  Fix:     Make sure your resume is in the project folder
+           and RESUME_PATH in .env matches the filename
+
+  Problem: "requirements.txt not found"
+  Fix:     Make sure you're inside the ai-job-bot folder
+           Run: cd ai-job-bot
+
+  Problem: pip install fails
+  Fix:     Try: pip install -r requirements.txt --break-system-packages
+
+
+────────────────────────────────────────────────────────────────
+FILE STRUCTURE EXPLAINED
+────────────────────────────────────────────────────────────────
+
+  ai-job-bot/
+  ├── main.py              → Main pipeline (run this)
+  ├── dashboard.py         → Streamlit visual dashboard
+  ├── config.py            → All settings loaded from .env
+  ├── job_prefs.json       → Your job search preferences
+  ├── .env                 → Your personal info (NOT on GitHub)
+  ├── .env.example         → Template for .env
+  ├── requirements.txt     → Python packages needed
+  │
+  ├── ai/
+  │   ├── matcher.py       → LLaMA scores resume vs job (0-100)
+  │   └── cover_letter.py  → LLaMA writes cover letters
+  │
+  ├── scraper/
+  │   ├── job_scraper.py   → Browser scraping engine
+  │   └── site_handlers.py → LinkedIn + generic board handlers
+  │
+  ├── automation/
+  │   ├── apply_bot.py     → Navigates and submits applications
+  │   └── form_filler.py   → Human-like form filling
+  │
+  ├── utils/
+  │   ├── resume_parser.py → Reads PDF/DOCX resume
+  │   ├── helpers.py       → Data storage, deduplication
+  │   └── logger.py        → Logging system
+  │
+  └── data/
+      ├── jobs.csv         → All scraped jobs stored here
+      └── applications.csv → All applications tracked here
+
+
+────────────────────────────────────────────────────────────────
+QUICK COMMAND REFERENCE
+────────────────────────────────────────────────────────────────
+
+  Start Ollama (always needed first):
+    ollama serve
+
+  Test dry run (safe, no submissions):
+    python main.py --resume resume.pdf --dry-run
+
+  Go live with visible browser:
+    python main.py --resume resume.pdf --mode visible --batch 5
+
+  Open dashboard:
+    streamlit run dashboard.py
+
+  Retry failed applications:
+    python main.py --retry
+
+
+════════════════════════════════════════════════════════════════
+  Questions or issues? Open a GitHub issue at:
+  https://github.com/Blaze5322/ai-job-bot/issues
+════════════════════════════════════════════════════════════════
