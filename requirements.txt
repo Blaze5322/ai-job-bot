@@ -1,0 +1,22 @@
+# Core
+playwright>=1.44.0
+python-dotenv>=1.0.0
+
+# Resume parsing
+PyMuPDF>=1.24.0          # PDF text extraction (fitz)
+python-docx>=1.1.0       # DOCX parsing
+
+# Data processing
+pandas>=2.2.0
+
+# Utilities
+tenacity>=8.3.0           # Retry logic with exponential back-off
+aiohttp>=3.9.0            # Async HTTP for scraping
+beautifulsoup4>=4.12.0    # HTML parsing
+lxml>=5.2.0               # Fast XML/HTML parser
+ 
+# Dashboard (optional)
+streamlit>=1.35.0
+
+# Type checking / dev
+mypy>=1.10.0

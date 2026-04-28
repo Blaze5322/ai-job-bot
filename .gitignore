@@ -1,0 +1,46 @@
+# Environment & secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Data (keep CSV headers, ignore actual data rows)
+# Comment out the lines below if you want to track data files
+# data/*.csv
+
+# Resume (never commit!)
+resume.pdf
+resume.docx
+*.pdf
+*.docx
+
+# Logs & screenshots
+logs/
+*.log
+
+# Playwright
+.playwright/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Streamlit
+.streamlit/
+
+# MyPy
+.mypy_cache/

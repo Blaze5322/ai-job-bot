@@ -1,0 +1,21 @@
+{
+  "job_titles": [
+    "Software Engineer",
+    "Python Developer",
+    "Backend Developer"
+  ],
+  "keywords": [
+    "Python",
+    "REST API",
+    "Django",
+    "Flask"
+  ],
+  "locations": [
+    "Remote",
+    "New Delhi",
+    "India"
+  ],
+  "min_salary": 0,
+  "job_type": "full-time",
+  "experience_level": "entry"
+}
